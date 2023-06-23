@@ -38,7 +38,7 @@ class MainActivity : ComponentActivity() {
                         "",
                     ))
                 }
-                getData("London", this, daysList, currentDay)
+                getData("Podgorica", this, daysList, currentDay)
                 Image(
                     painter = painterResource(id = R.drawable.main_screen),
                     contentDescription = "main_screen_image",
@@ -49,7 +49,7 @@ class MainActivity : ComponentActivity() {
                 )
                 Column{
                     MainCard(currentDay)
-                    TabLayout(daysList)
+                    TabLayout(daysList, currentDay)
                 }
             }
         }
