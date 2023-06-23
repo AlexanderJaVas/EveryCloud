@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import com.avvaapps.everycloud.data.getData
 import com.avvaapps.everycloud.screens.MainCard
 import com.avvaapps.everycloud.screens.TabLayout
 import com.avvaapps.everycloud.ui.theme.EveryCloudTheme
@@ -19,6 +20,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             EveryCloudTheme {
+                getData("London", this)
                 Image(
                     painter = painterResource(id = R.drawable.main_screen),
                     contentDescription = "main_screen_image",
