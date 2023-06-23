@@ -26,7 +26,19 @@ class MainActivity : ComponentActivity() {
                 val daysList = remember {
                     mutableStateOf(listOf<WeatherModel>())
                 }
-                getData("London", this, daysList)
+                val currentDay = remember {
+                    mutableStateOf(WeatherModel(
+                        "",
+                        "",
+                        "0.0",
+                        "",
+                        "",
+                        "0.0",
+                        "0.0",
+                        "",
+                    ))
+                }
+                getData("London", this, daysList, currentDay)
                 Image(
                     painter = painterResource(id = R.drawable.main_screen),
                     contentDescription = "main_screen_image",
@@ -36,7 +48,7 @@ class MainActivity : ComponentActivity() {
                     contentScale = ContentScale.FillBounds
                 )
                 Column{
-                    MainCard()
+                    MainCard(currentDay)
                     TabLayout(daysList)
                 }
             }

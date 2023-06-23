@@ -11,7 +11,8 @@ import org.json.JSONObject
 const val API_KEY = "5dd172761dfb4d75880184229231906"
 
 fun getData(
-    city: String, context: Context, daysList: MutableState<List<WeatherModel>>) {
+    city: String, context: Context, daysList: MutableState<List<WeatherModel>>,
+    currentDay: MutableState<WeatherModel>) {
     val url = "https://api.weatherapi.com/v1/forecast.json?" +
             "key=$API_KEY" +
             "&q=$city" +
@@ -24,6 +25,7 @@ fun getData(
         url,
         { response ->
             val list = getWeatherByDays(response)
+            currentDay.value = list[0]
             daysList.value = list
         },
         { error ->
