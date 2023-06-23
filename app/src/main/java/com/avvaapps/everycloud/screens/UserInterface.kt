@@ -18,10 +18,11 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.avvaapps.everycloud.data.WeatherModel
 import com.avvaapps.everycloud.ui.theme.LightBlue
 
 @Composable
-fun ListItem() {
+fun ListItem(item: WeatherModel) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -39,21 +40,23 @@ fun ListItem() {
                     .padding(start = 8.dp, top = 5.dp, bottom = 5.dp)
             ) {
                 Text(
-                    text = "12:00",
+                    text = item.time,
                     color = Color.White
                 )
                 Text(
-                    text = "Sunny",
+                    text = item.condition,
                     color = Color.White
                 )
             }
             Text(
-                text = "25°C",
+                text = if (item.currentTemperature.isEmpty())
+                    "${item.maxTemperature}°C/${item.minTemperature}°C"
+                else "${item.currentTemperature}°C",
                 color = Color.White,
                 style = TextStyle(fontSize = 25.sp)
             )
             AsyncImage(
-                model = "https://cdn.weatherapi.com/weather/64x64/day/116.png",
+                model = "https:${item.icon}",
                 contentDescription = "weather_image",
                 modifier = Modifier
                     .size(35.dp)

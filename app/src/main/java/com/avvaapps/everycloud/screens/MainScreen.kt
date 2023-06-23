@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Tab
 import androidx.compose.material.TabRow
@@ -30,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.avvaapps.everycloud.R
+import com.avvaapps.everycloud.data.WeatherModel
 import com.avvaapps.everycloud.ui.theme.LightBlue
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -163,11 +165,35 @@ fun TabLayout() {
         ) { index ->
             LazyColumn(
                 modifier = Modifier.fillMaxSize()
-            ){
-                items(15){
-                    ListItem()
+            ) {
+                itemsIndexed(
+                    listOf(
+                        WeatherModel(
+                            "London",
+                            "10:00",
+                            "25°C",
+                            "Sunny",
+                            "https://cdn.weatherapi.com/weather/64x64/day/176.png",
+                            "",
+                            "",
+                            ""
+                        ),
+                        WeatherModel(
+                            "London",
+                            "23/06/2023",
+                            "",
+                            "Sunny",
+                            "https://cdn.weatherapi.com/weather/64x64/day/176.png",
+                            "26",
+                            "12",
+                            "djaldjskdalksdlkajsd"
+                        )
+                    )
+                ) { _, item ->
+                    ListItem(item)
                 }
-            }
+
             }
         }
     }
+}
