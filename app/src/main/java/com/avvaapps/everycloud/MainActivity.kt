@@ -6,10 +6,13 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import com.avvaapps.everycloud.data.WeatherModel
 import com.avvaapps.everycloud.data.getData
 import com.avvaapps.everycloud.screens.MainCard
 import com.avvaapps.everycloud.screens.TabLayout
@@ -20,7 +23,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             EveryCloudTheme {
-                getData("London", this)
+                val daysList = remember {
+                    mutableStateOf(listOf<WeatherModel>())
+                }
+                getData("London", this, daysList)
                 Image(
                     painter = painterResource(id = R.drawable.main_screen),
                     contentDescription = "main_screen_image",
@@ -31,7 +37,7 @@ class MainActivity : ComponentActivity() {
                 )
                 Column{
                     MainCard()
-                    TabLayout()
+                    TabLayout(daysList)
                 }
             }
         }
