@@ -14,6 +14,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import com.avvaapps.everycloud.data.WeatherModel
 import com.avvaapps.everycloud.data.getData
+import com.avvaapps.everycloud.screens.DialogueSearch
 import com.avvaapps.everycloud.screens.MainCard
 import com.avvaapps.everycloud.screens.TabLayout
 import com.avvaapps.everycloud.ui.theme.EveryCloudTheme
@@ -26,17 +27,28 @@ class MainActivity : ComponentActivity() {
                 val daysList = remember {
                     mutableStateOf(listOf<WeatherModel>())
                 }
+                val dialogueState = remember {
+                    mutableStateOf(false)
+                }
+
                 val currentDay = remember {
-                    mutableStateOf(WeatherModel(
-                        "",
-                        "",
-                        "0.0",
-                        "",
-                        "",
-                        "0.0",
-                        "0.0",
-                        "",
-                    ))
+                    mutableStateOf(
+                        WeatherModel(
+                            "",
+                            "",
+                            "0.0",
+                            "",
+                            "",
+                            "0.0",
+                            "0.0",
+                            "",
+                        )
+                    )
+                }
+                if (dialogueState.value){
+                    DialogueSearch(dialogueState, onSubmit = {
+                        getData(it, this, daysList, currentDay)
+                    })
                 }
                 getData("Podgorica", this, daysList, currentDay)
                 Image(
@@ -47,8 +59,15 @@ class MainActivity : ComponentActivity() {
                         .alpha(0.5f),
                     contentScale = ContentScale.FillBounds
                 )
-                Column{
-                    MainCard(currentDay)
+                Column {
+                    MainCard(
+                        currentDay,
+                        onClickSync = {
+                            getData("Podgorica", this@MainActivity, daysList, currentDay)
+                        },
+                        onClickSearch = {
+                            dialogueState.value = true
+                        })
                     TabLayout(daysList, currentDay)
                 }
             }
